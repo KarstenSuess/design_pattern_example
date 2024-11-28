@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+dynamic = ["readme", "dependencies"]
+name = "design_pattern"
+version = "0.0.1"
+authors = [
+    { name="Daniel Hufschläger", email="daniel@hufschlaeger.net"},
+]
+description = "Example for design patterns."
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/KarstenSuess/design_pattern_example"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+exclude = ["docs*", "tests*", "examples*"]
+
+[project.scripts]
+download-release =  "src.design_pattern.cli:main"
