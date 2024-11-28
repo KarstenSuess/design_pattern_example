@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, asdict
-from src.design_pattern.utils.cast import Cast
+from design_pattern.utils.cast import Cast
 
 @dataclass
 class DroidCsvModel:

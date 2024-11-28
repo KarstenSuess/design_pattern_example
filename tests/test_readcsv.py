@@ -2,7 +2,7 @@ import csv
 import os
 import unittest
 
-from src.design_pattern.models import DroidCsvModel
+from design_pattern.models import DroidCsvModel
 from tests import TESTDATA_PATH
 
 class TestReadCSVFile(unittest.TestCase):

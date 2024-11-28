@@ -1,10 +1,10 @@
 import csv
-from dataclasses import fields, asdict
+from dataclasses import asdict
+from xml.dom.minidom import Document
+from design_pattern.models import DroidCsvModel, AbstractBuilder
 
-from src.design_pattern.models import DroidCsvModel
-from xml.dom.minidom import Document, Element, Node
 
-class XmlBuilder:
+class XmlBuilder(AbstractBuilder):
     def __init__(self, csv_file: str, xml_file: str):
         # store params in class
         self.__csvFile = csv_file
@@ -28,7 +28,6 @@ class XmlBuilder:
                 xmlNode.appendChild(xmlEntry)
 
             parent.appendChild(xmlNode)
-            print(key, value)
 
 
     def build(self):
@@ -52,7 +51,8 @@ class XmlBuilder:
     def __write_xml_file(self):
         if self.__xmlDoc:
             with open(self.__xmlFile, "w") as f:
-                f.write( self.__xmlDoc.toprettyxml() )
+                self.__xmlDoc.writexml(f, addindent="\t", newl="\n", encoding="utf-8")
+
 
     ## just for unit testing
     def get_data(self):
