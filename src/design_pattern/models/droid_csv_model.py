@@ -16,7 +16,7 @@ class DroidCsvModel:
     last_modified: str = None
     extension_mismatch: str = None
     hash: str = None
-    format_count: int = None
+    format_count: str = None
     puid: str = None
     mime_type: str = None
     format_name: str = None

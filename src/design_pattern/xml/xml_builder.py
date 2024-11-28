@@ -1,7 +1,8 @@
 import csv
+from dataclasses import fields, asdict
 
 from src.design_pattern.models import DroidCsvModel
-
+from xml.dom.minidom import Document, Element, Node
 
 class XmlBuilder:
     def __init__(self, csv_file: str, xml_file: str):
@@ -9,21 +10,49 @@ class XmlBuilder:
         self.__csvFile = csv_file
         self.__xmlFile = xml_file
         self.__data = []
-        # read data
-        self.read_csv_file()
-        pass
+        self.__xmlDoc = None
 
-    def read_csv_file (self ):
+
+    def __read_csv_file (self ):
         with open(self.__csvFile, newline="") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 self.__data.append( DroidCsvModel.from_dict(row) )
 
-    def build(self):
-        pass
+    def __add_entry__(self, parent , obj : DroidCsvModel ):
 
-    def write_xml_file(self):
-        pass
+        for key, value in asdict(obj).items():
+            xmlNode = self.__xmlDoc.createElement(key.upper())
+            if value:
+                xmlEntry = self.__xmlDoc.createTextNode(value)
+                xmlNode.appendChild(xmlEntry)
+
+            parent.appendChild(xmlNode)
+            print(key, value)
+
+
+    def build(self):
+        # build steps
+        # 1. read data
+        self.__read_csv_file()
+
+        # 2. convert to xml
+        self.__xmlDoc = Document()
+        xmlRoot = self.__xmlDoc.createElement("DroidData")
+        self.__xmlDoc.appendChild(xmlRoot)
+
+        for row in self.__data:
+            xmlRow = self.__xmlDoc.createElement("row")
+            xmlRoot.appendChild(xmlRow)
+            self.__add_entry__(xmlRow, row)
+
+        ## 3. finally wite file to disk
+        self.__write_xml_file()
+
+    def __write_xml_file(self):
+        if self.__xmlDoc:
+            with open(self.__xmlFile, "w") as f:
+                f.write( self.__xmlDoc.toprettyxml() )
 
     ## just for unit testing
     def get_data(self):
