@@ -1,6 +1,6 @@
 import argparse
 
-from design_pattern.xml import XmlBuilder
+from design_pattern.xmlformats import DroidCsvXmlBuilder
 
 def main():
     parser = argparse.ArgumentParser(exit_on_error=False)
@@ -10,9 +10,8 @@ def main():
 
     try:
         args = parser.parse_args()
-        xmlbuidler: XmlBuilder
-        #= XmlBuilder(args.input, args.out)
-        #xmlbuidler.build()
+        xmlbuidler: DroidCsvXmlBuilder = DroidCsvXmlBuilder(args.input, args.out)
+        xmlbuidler.build()
         return 0
     except Exception as e:
         print("Error:", e)

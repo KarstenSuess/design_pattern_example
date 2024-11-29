@@ -1,10 +1,9 @@
 import csv
 from dataclasses import asdict
-from xml.dom.minidom import Document
 from design_pattern.models import DroidCsvModel, AbstractBuilder
+from xml.dom.minidom import Document
 
-
-class XmlBuilder(AbstractBuilder):
+class DroidCsvXmlBuilder(AbstractBuilder):
     def __init__(self, csv_file: str, xml_file: str):
         # store params in class
         self.__csvFile = csv_file
