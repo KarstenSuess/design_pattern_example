@@ -29,4 +29,4 @@ dependencies = {file = ["requirements.txt"]}
 exclude = ["docs*", "tests*", "examples*"]
 
 [project.scripts]
-download-release =  "src.design_pattern.cli:main"
+download-release =  "design_pattern.cli:main"
