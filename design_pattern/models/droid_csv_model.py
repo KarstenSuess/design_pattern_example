@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field, asdict
 from design_pattern.utils.cast import Cast
 
+
 @dataclass
 class DroidCsvModel:
     id: str = None
