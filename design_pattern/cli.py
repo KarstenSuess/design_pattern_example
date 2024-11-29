@@ -6,7 +6,7 @@ from design_pattern.xmlformats import DroidCsvXmlBuilder
 def main():
     parser = argparse.ArgumentParser(exit_on_error=False)
     parser.add_argument("-i", "--input", help="input csv file (with path)", type=str, required=True)
-    parser.add_argument("-o", "--out", help="output xml file (with path)", type=str, required=True)
+    parser.add_argument("-o", "--output", help="output xml file (with path)", type=str, required=True)
 
     try:
         args = parser.parse_args()
