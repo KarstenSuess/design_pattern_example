@@ -5,7 +5,7 @@ from design_pattern.identify.borg_identifier import BorgIdentifier
 from design_pattern.models import DroidCsvModel
 from tests import TESTDATA_PATH
 
-class Test_BorIdentifier(unittest.TestCase):
+class Test_BorgIdentifier(unittest.TestCase):
     def setUp(self):
         pass
 
