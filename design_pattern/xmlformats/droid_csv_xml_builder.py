@@ -44,7 +44,7 @@ class DroidCsvXmlBuilder(AbstractBuilder):
             xmlRoot.appendChild(xmlRow)
             self.__add_entry__(xmlRow, row)
 
-        ## 3. finally wite file to disk
+        ## 3. finally write file to disk
         self.__write_xml_file()
 
     def __write_xml_file(self):
