@@ -27,7 +27,7 @@ class BorgIdentifier(AbstractIdentifier):
                     'file':(file_name, data, "multipart/form-data")
                 }
 
-                resp = s.post('/analyze-file', proxies=self.__proxies, files=payload)
+                resp = s.post('/api/analyze-file', proxies=self.__proxies, files=payload)
                 if resp.status_code == 200 and resp.content:
                     self.__response = json.loads(resp.content)
                 else:

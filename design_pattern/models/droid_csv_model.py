@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict
 from design_pattern.utils.cast import Cast
 
 
@@ -27,5 +27,5 @@ class DroidCsvModel:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, dto: dict) -> 'TaskInfoData':
+    def from_dict(cls, dto: dict) -> 'DroidCsvModel':
         return Cast(dto, cls)
