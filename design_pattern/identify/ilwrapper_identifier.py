@@ -29,10 +29,11 @@ class ILWrapperIdentifier(AbstractIdentifier):
                 }
 
                 resp = s.post('/api/upload', proxies=self.__proxies, files=payload)
-                print (resp)
+                print (resp.content)
                 if resp.status_code == 200:
                     if resp.content:
                         self.__response = json.loads(resp.content)
+                        # respdata : ILWrapperFileUploadResponse = ILWrapperFileUploadResponse().from_dict(resp.content)
                 else:
                     raise Exception(f'{resp.status_code}: {resp.content}')
 
