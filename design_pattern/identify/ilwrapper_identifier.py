@@ -13,7 +13,7 @@ class ILWrapperIdentifier(AbstractIdentifier):
         self.__proxies = proxies
 
     def __upload_file(self, file_name : str):
-        with RemoteSession(base_url=self.__base_url) as s:
+        with (RemoteSession(base_url=self.__base_url) as s):
 
             header = {
                 'Content-Type': 'multipart/form-data',
@@ -29,8 +29,10 @@ class ILWrapperIdentifier(AbstractIdentifier):
                 }
 
                 resp = s.post('/api/upload', proxies=self.__proxies, files=payload)
-                if resp.status_code == 200 and resp.content:
-                    self.__response = json.loads(resp.content)
+                print (resp)
+                if resp.status_code == 200:
+                    if resp.content:
+                        self.__response = json.loads(resp.content)
                 else:
                     raise Exception(f'{resp.status_code}: {resp.content}')
 
