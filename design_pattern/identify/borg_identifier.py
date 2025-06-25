@@ -11,7 +11,7 @@ class BorgIdentifier(AbstractIdentifier):
         self.__response = None
         self.__proxies = proxies
 
-    def __indentify(self, file_name : str):
+    def __identify(self, file_name : str):
         with RemoteSession(base_url=self.__base_url) as s:
 
             header = {
@@ -35,6 +35,6 @@ class BorgIdentifier(AbstractIdentifier):
 
     def identify(self, file_name: str = None) -> dict[str]:
         if self.__base_url and file_name:
-            self.__indentify(file_name)
+            self.__identify(file_name)
 
         return self.__response
