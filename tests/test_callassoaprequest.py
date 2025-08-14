@@ -2,7 +2,7 @@ import unittest
 
 import requests
 
-from design_pattern.models.callas_soap import ExtExecuteRequestBuilder, ExtExecuteResultReader, ExtExecuteResultPayload, \
+from design_pattern.models.callas_soap import ExtExecuteRequestBuilder, ExtExecuteResultPayload, \
     SoapEnvelope
 
 
@@ -36,7 +36,8 @@ class CallasSOAPRequest(unittest.TestCase):
         resp.raise_for_status()  # HTTP-Fehler werfen
 
         env = SoapEnvelope.from_xml(resp.content, ExtExecuteResultPayload)
-        result: ExtExecuteResultPayload = env.payload  # type: ignore[assignment]
+        result: ExtExecuteResultPayload = env.payload
+
         print("Return code:", result.return_code)
         print("Console out:\n", result.console_out)
 
