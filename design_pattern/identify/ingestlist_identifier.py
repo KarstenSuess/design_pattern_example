@@ -151,7 +151,10 @@ class IngestListIdentifier(AbstractIdentifier):
                 self.__login()
 
             self.__identify(file_path, job_type)
-            return IngestListTaskResponse.from_dict(self.__response)
+            try:
+                return IngestListTaskResponse.from_dict(self.__response)
+            except Exception:
+                return None
         return None
 
     def validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> IngestListTaskResponse:
@@ -161,7 +164,10 @@ class IngestListIdentifier(AbstractIdentifier):
                 self.__login()
 
             self.__validate(file_path, job_type)
-            return IngestListTaskResponse.from_dict(self.__response)
+            try:
+                return IngestListTaskResponse.from_dict(self.__response)
+            except Exception:
+                return None
         return None
 
     def check_task_status(self, job_id: str) -> IngestListTaskResponse:
@@ -170,5 +176,8 @@ class IngestListIdentifier(AbstractIdentifier):
                 self.__login()
 
             self.__check_task_status(job_id)
-            return IngestListTaskResponse.from_dict(self.__response)
+            try:
+                return IngestListTaskResponse.from_dict(self.__response)
+            except Exception:
+                return None
         return None

@@ -4,12 +4,12 @@ from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 
 from design_pattern.identify.ingestlist_identifier import IngestListIdentifier
-from design_pattern.identify.ilwrapper import ILWrapperConfig, ILWrapperJobtype
+from design_pattern.identify.ingestlist import IngestListIdentifierConfig, IngestListJobType
 
 
 class TestILWrapperValidate(unittest.TestCase):
     def make_cfg(self):
-        return ILWrapperConfig(
+        return IngestListIdentifierConfig(
             base_url="http://example.com/",
             username="user",
             password="pass",
@@ -45,13 +45,13 @@ class TestILWrapperValidate(unittest.TestCase):
 
         with patch("builtins.open", self.mock_open_binary(b"file-bytes")):
             with patch(
-                "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
+                "design_pattern.identify.ingestlist_identifier.RemoteSession",
                 side_effect=[session_login, session_create],
             ):
                 il = IngestListIdentifier(cfg)  # consumes login session
-                il.validate("/path/to/file.pdf", ILWrapperJobtype.LOCAL)  # consumes create session
+                il.validate("/path/to/file.pdf", IngestListJobType.LOCAL)  # consumes create session
 
-        self.assertEqual(getattr(il, "_ILWrapper__response"), payload)
+        self.assertEqual(getattr(il, "_IngestListIdentifier__response"), payload)
 
     def test_validate_local_non200_raises(self):
         cfg = self.make_cfg()
@@ -64,12 +64,12 @@ class TestILWrapperValidate(unittest.TestCase):
 
         with patch("builtins.open", self.mock_open_binary(b"file-bytes")):
             with patch(
-                "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
+                "design_pattern.identify.ingestlist_identifier.RemoteSession",
                 side_effect=[session_login, session_create],
             ):
                 il = IngestListIdentifier(cfg)
                 with self.assertRaises(Exception) as ctx:
-                    il.validate("/path/to/file.pdf", ILWrapperJobtype.LOCAL)
+                    il.validate("/path/to/file.pdf", IngestListJobType.LOCAL)
 
         self.assertIn("422", str(ctx.exception))
         self.assertIn("unprocessable", str(ctx.exception))
@@ -85,13 +85,13 @@ class TestILWrapperValidate(unittest.TestCase):
         session_create = self.make_context_session(validate_resp)
 
         with patch(
-            "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
+            "design_pattern.identify.ingestlist_identifier.RemoteSession",
             side_effect=[session_login, session_create],
         ):
             il = IngestListIdentifier(cfg)
-            il.validate("remote-file.pdf", ILWrapperJobtype.REMOTE)
+            il.validate("remote-file.pdf", IngestListJobType.REMOTE)
 
-        self.assertEqual(getattr(il, "_ILWrapper__response"), payload)
+        self.assertEqual(getattr(il, "_IngestListIdentifier__response"), payload)
 
     def test_validate_remote_non200_raises(self):
         cfg = self.make_cfg()
@@ -103,12 +103,12 @@ class TestILWrapperValidate(unittest.TestCase):
         session_create = self.make_context_session(error_resp)
 
         with patch(
-            "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
+            "design_pattern.identify.ingestlist_identifier.RemoteSession",
             side_effect=[session_login, session_create],
         ):
             il = IngestListIdentifier(cfg)
             with self.assertRaises(Exception) as ctx:
-                il.validate("remote-file.pdf", ILWrapperJobtype.REMOTE)
+                il.validate("remote-file.pdf", IngestListJobType.REMOTE)
 
         self.assertIn("500", str(ctx.exception))
         self.assertIn("server error", str(ctx.exception))

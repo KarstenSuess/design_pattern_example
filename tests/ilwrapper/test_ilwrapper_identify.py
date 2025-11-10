@@ -4,12 +4,12 @@ from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 
 from design_pattern.identify.ingestlist_identifier import IngestListIdentifier
-from design_pattern.identify.ilwrapper import ILWrapperConfig, ILWrapperJobtype
+from design_pattern.identify.ingestlist import IngestListIdentifierConfig, IngestListJobType
 
 
 class TestILWrapperIdentify(unittest.TestCase):
     def make_cfg(self):
-        return ILWrapperConfig(
+        return IngestListIdentifierConfig(
             base_url="http://example.com/",
             username="user",
             password="pass",
@@ -36,12 +36,12 @@ class TestILWrapperIdentify(unittest.TestCase):
         session_login = self.make_context_session(login_resp)
         session_create = self.make_context_session(identify_resp)
 
-        with patch("design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession", side_effect=[session_login, session_create]):
+        with patch("design_pattern.identify.ingestlist_identifier.RemoteSession", side_effect=[session_login, session_create]):
             il = IngestListIdentifier(cfg)  # will consume session_login
-            il.identify("/path/to/file.pdf", ILWrapperJobtype.REMOTE)  # will consume session_create
+            il.identify("/path/to/file.pdf", IngestListJobType.REMOTE)  # will consume session_create
 
         # Access the private response via name mangling
-        self.assertEqual(getattr(il, "_ILWrapper__response"), identify_payload)
+        self.assertEqual(getattr(il, "_IngestListIdentifier__response"), identify_payload)
 
     def test_identify_remote_non200_raises(self):
         cfg = self.make_cfg()
@@ -52,10 +52,10 @@ class TestILWrapperIdentify(unittest.TestCase):
         session_login = self.make_context_session(login_resp)
         session_create = self.make_context_session(error_resp)
 
-        with patch("design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession", side_effect=[session_login, session_create]):
+        with patch("design_pattern.identify.ingestlist_identifier.RemoteSession", side_effect=[session_login, session_create]):
             il = IngestListIdentifier(cfg)
             with self.assertRaises(Exception) as ctx:
-                il.identify("/path/to/file.pdf", ILWrapperJobtype.REMOTE)
+                il.identify("/path/to/file.pdf", IngestListJobType.REMOTE)
 
         self.assertIn("400", str(ctx.exception))
         self.assertIn("bad request", str(ctx.exception))

@@ -2,7 +2,8 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 
-from design_pattern.identify.ingestlist_identifier import IngestListIdentifier, IngestListIdentifierConfig
+from design_pattern.identify.ingestlist_identifier import IngestListIdentifier
+from design_pattern.identify.ingestlist import IngestListIdentifierConfig
 
 
 class TestILWrapperLogin(unittest.TestCase):
@@ -16,9 +17,6 @@ class TestILWrapperLogin(unittest.TestCase):
 
     def test_login_success_sets_token(self):
         cfg = self.make_cfg()
-        il = IngestListIdentifier(cfg)
-        # Work around private attribute name and reference to self.proxies in implementation
-        il.proxies = None
 
         # Prepare a fake Response-like object
         resp = SimpleNamespace(status_code=200, content=b"ok", text='{"token":"abc123"}')
@@ -29,15 +27,14 @@ class TestILWrapperLogin(unittest.TestCase):
         fake_session.__exit__.return_value = False
         fake_session.post.return_value = resp
 
-        with patch("design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession", return_value=fake_session):
-            il._ILWrapper__login()
+        # Patch the RemoteSession used by the implementation during __init__ login
+        with patch("design_pattern.identify.ingestlist_identifier.RemoteSession", return_value=fake_session):
+            il = IngestListIdentifier(cfg)
 
         self.assertEqual(il.token, "abc123")
 
     def test_login_failure_raises_exception(self):
         cfg = self.make_cfg()
-        il = IngestListIdentifier(cfg)
-        il.proxies = None
 
         resp = SimpleNamespace(status_code=401, content=b"unauthorized", text="")
 
@@ -46,9 +43,9 @@ class TestILWrapperLogin(unittest.TestCase):
         fake_session.__exit__.return_value = False
         fake_session.post.return_value = resp
 
-        with patch("design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession", return_value=fake_session):
+        with patch("design_pattern.identify.ingestlist_identifier.RemoteSession", return_value=fake_session):
             with self.assertRaises(Exception) as ctx:
-                il._ILWrapper__login()
+                IngestListIdentifier(cfg)
 
         self.assertIn("401", str(ctx.exception))
         self.assertIn("unauthorized", str(ctx.exception))
