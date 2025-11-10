@@ -8,7 +8,7 @@ from design_pattern.xmlformats import parse_il_results
 from tests import TESTDATA_PATH
 
 
-class Test_ILWrapperIdentifier(unittest.TestCase):
+class TestILWrapperIdentifier(unittest.TestCase):
     def test_upload_file(self):
         test_file_path = os.path.join(TESTDATA_PATH,
                                       '06842ea9-032b-4c2d-b88b-23c848812260_Aussonderung.Bewertungsverzeichnis.0502.xlsx')

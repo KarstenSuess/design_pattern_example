@@ -1,13 +1,15 @@
 from design_pattern.identify.borg_identifier import BorgIdentifier
 from design_pattern.identify.ingestlist_identifier import IngestListIdentifier
+from design_pattern.identify.ingestlist_identifier_async import IngestListIdentifierAsync
 from design_pattern.identify.ingestlist import IngestListIdentifierConfig, IngestListJobType, IngestListTaskResponse, \
-    IngestListTaskState
+  IngestListTaskState
 
 __all__ = [
-    "IngestListIdentifierConfig",
-    "IngestListJobType",
-    "IngestListTaskResponse",
-    "IngestListTaskState",
-    "BorgIdentifier",
-    "IngestListIdentifier",
+  "IngestListIdentifierConfig",
+  "IngestListJobType",
+  "IngestListTaskResponse",
+  "IngestListTaskState",
+  "BorgIdentifier",
+  "IngestListIdentifier",
+  "IngestListIdentifierAsync"
 ]
