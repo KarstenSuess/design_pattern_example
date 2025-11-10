@@ -31,7 +31,7 @@ class IngestListIdentifier(AbstractIdentifier):
     def __login(self):
         with RemoteSession(base_url=self.__base_url) as s:
             payload = {
-                'username': self.__username,
+                'email': self.__username,
                 'password': self.__password
             }
 
