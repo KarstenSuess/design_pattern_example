@@ -1,7 +1,7 @@
 import json
 
 from design_pattern.identify.ingestlist import IngestListIdentifierConfig, IngestListJobType
-from design_pattern.identify.ingestlist.models import IngestListResponse
+from design_pattern.identify.ingestlist.models import IngestListTaskResponse
 from design_pattern.models.abstract_identifier import AbstractIdentifier
 from design_pattern.utils import RemoteSession
 
@@ -128,22 +128,47 @@ class IngestListIdentifier(AbstractIdentifier):
                     else:
                         raise Exception(f'{resp.status_code}: {resp.content}')
 
-    def identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> IngestListResponse:
+    def __check_task_status(self, job_id: str):
+        with RemoteSession(base_url=self.__base_url) as s:
+            payload = {
+                'jobId': job_id
+            }
+
+            resp = s.get(f'api/job/{job_id}',
+                          proxies=self.__proxies,
+                          headers=self.__header(),
+                          data=json.dumps(payload))
+
+            if 200 <= resp.status_code < 400 and resp.content:
+                self.__response = json.loads(resp.content)
+            else:
+                raise Exception(f'{resp.status_code}: {resp.content}')
+
+    def identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> IngestListTaskResponse:
 
         if self.__base_url and file_path:
             if self.token is None:
                 self.__login()
 
             self.__identify(file_path, job_type)
-            return IngestListResponse.from_dict(self.__response)
+            return IngestListTaskResponse.from_dict(self.__response)
         return None
 
-    def validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> IngestListResponse:
+    def validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> IngestListTaskResponse:
 
         if self.__base_url and file_path:
             if self.token is None:
                 self.__login()
 
             self.__validate(file_path, job_type)
-            return IngestListResponse.from_dict(self.__response)
+            return IngestListTaskResponse.from_dict(self.__response)
+        return None
+
+    def check_task_status(self, job_id: str) -> IngestListTaskResponse:
+        if self.__base_url and job_id:
+            if self.token is None:
+                self.__login()
+
+            self.__check_task_status(job_id)
+            return IngestListTaskResponse.from_dict(self.__response)
         return None

@@ -1,7 +1,8 @@
 import os
 import unittest
 
-from design_pattern.identify import IngestListIdentifier, IngestListIdentifierConfig, IngestListJobType
+from design_pattern.identify import IngestListIdentifier, IngestListIdentifierConfig, IngestListJobType, \
+    IngestListTaskResponse, IngestListTaskState
 from tests import TESTDATA_PATH
 
 
@@ -13,14 +14,17 @@ class Test_ILWrapperIdentifier(unittest.TestCase):
         config: IngestListIdentifierConfig = IngestListIdentifierConfig(
             base_url="http://blha-dimagapps-ilwrapper",
             username="apiuser",
-            password="AUiS9Cne7YszGMB45cqa",
+            password="",
             proxies=None
         )
 
         identifier: IngestListIdentifier = IngestListIdentifier(config)
-        resp = identifier.identify(test_file_path, IngestListJobType.LOCAL)
-        print(resp)
+        IngestListTask : IngestListTaskResponse = identifier.identify(test_file_path, IngestListJobType.LOCAL)
 
+        while IngestListTask.status != IngestListTaskState.Completed:
+            IngestListTask = identifier.check_task_status(IngestListTask.id)
+
+        print(IngestListTask.output)
 
 if __name__ == '__main__':
     unittest.main()
