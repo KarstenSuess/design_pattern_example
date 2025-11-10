@@ -2,6 +2,7 @@ import json
 from dataclasses import dataclass
 from enum import Enum
 
+from design_pattern.models.abstract_identifier import AbstractIdentifier
 from design_pattern.utils import RemoteSession
 
 
@@ -17,7 +18,7 @@ class ILWrapperJobtype(Enum):
     REMOTE = 2
 
 
-class ILWrapper:
+class ILWrapper(AbstractIdentifier):
     def __init__(self, cfg: ILWrapperConfig):
         self.__base_url = cfg.base_url
         self.__proxies = cfg.proxies

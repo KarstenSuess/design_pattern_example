@@ -4,7 +4,7 @@ from design_pattern.utils.cast import Cast
 
 @dataclass
 class DroidCsvModel:
-    id: str = None
+    Id: str = None
     parent_id: str = None
     uri: str = None
     file_path: str = None
