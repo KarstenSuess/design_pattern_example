@@ -4,7 +4,7 @@ import unittest
 
 from design_pattern.identify import IngestListIdentifierConfig, IngestListIdentifierAsync, IngestListTaskState
 
-from tests import TESTDATA_PATH
+# from tests import TESTDATA_PATH
 
 
 class TestILWrapperIdentifierAsync(unittest.TestCase):
@@ -19,9 +19,8 @@ class TestILWrapperIdentifierAsync(unittest.TestCase):
 
   async def blocking_behaviour(self):
     async def main():
-      cfg = IngestListIdentifierConfig(...)
 
-      async with IngestListIdentifierAsync(cfg) as identifier:
+      async with IngestListIdentifierAsync(self.configure()) as identifier:
         # Wartet bis alle Tasks COMPLETED sind
         results = await asyncio.gather(
           identifier.identify("file1.txt"),  # wartet auf Completion
@@ -79,7 +78,7 @@ class TestILWrapperIdentifierAsync(unittest.TestCase):
         for job_id in job_ids:
           if job_id not in completed:
             status = await identifier.check_task_status(job_id)
-            if status.status == 'Completed':
+            if status.status == IngestListTaskState.Completed:
               completed.add(job_id)
               print(f"✓ Task {job_id} completed ({len(completed)}/{len(job_ids)})")
 
