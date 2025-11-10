@@ -2,12 +2,12 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 
-from design_pattern.identify.ilwrapper.ilwrapper import ILWrapper, ILWrapperConfig
+from design_pattern.identify.ingestlist_identifier import IngestListIdentifier, IngestListIdentifierConfig
 
 
 class TestILWrapperLogin(unittest.TestCase):
     def make_cfg(self):
-        return ILWrapperConfig(
+        return IngestListIdentifierConfig(
             base_url="http://example.com/",
             username="user",
             password="pass",
@@ -16,7 +16,7 @@ class TestILWrapperLogin(unittest.TestCase):
 
     def test_login_success_sets_token(self):
         cfg = self.make_cfg()
-        il = ILWrapper(cfg)
+        il = IngestListIdentifier(cfg)
         # Work around private attribute name and reference to self.proxies in implementation
         il.proxies = None
 
@@ -36,7 +36,7 @@ class TestILWrapperLogin(unittest.TestCase):
 
     def test_login_failure_raises_exception(self):
         cfg = self.make_cfg()
-        il = ILWrapper(cfg)
+        il = IngestListIdentifier(cfg)
         il.proxies = None
 
         resp = SimpleNamespace(status_code=401, content=b"unauthorized", text="")

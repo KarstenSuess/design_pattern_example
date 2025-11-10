@@ -3,7 +3,7 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 
-from design_pattern.identify.ilwrapper.ilwrapper import ILWrapper
+from design_pattern.identify.ingestlist_identifier import IngestListIdentifier
 from design_pattern.identify.ilwrapper import ILWrapperConfig, ILWrapperJobtype
 
 
@@ -37,7 +37,7 @@ class TestILWrapperIdentify(unittest.TestCase):
         session_create = self.make_context_session(identify_resp)
 
         with patch("design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession", side_effect=[session_login, session_create]):
-            il = ILWrapper(cfg)  # will consume session_login
+            il = IngestListIdentifier(cfg)  # will consume session_login
             il.identify("/path/to/file.pdf", ILWrapperJobtype.REMOTE)  # will consume session_create
 
         # Access the private response via name mangling
@@ -53,7 +53,7 @@ class TestILWrapperIdentify(unittest.TestCase):
         session_create = self.make_context_session(error_resp)
 
         with patch("design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession", side_effect=[session_login, session_create]):
-            il = ILWrapper(cfg)
+            il = IngestListIdentifier(cfg)
             with self.assertRaises(Exception) as ctx:
                 il.identify("/path/to/file.pdf", ILWrapperJobtype.REMOTE)
 

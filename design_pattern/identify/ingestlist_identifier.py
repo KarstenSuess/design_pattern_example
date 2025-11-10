@@ -7,19 +7,19 @@ from design_pattern.utils import RemoteSession
 
 
 @dataclass
-class ILWrapperConfig:
+class IngestListIdentifierConfig:
     proxies: str | None = None
     base_url: str | None = None
     username: str | None = None
     password: str | None = None
 
-class ILWrapperJobtype(Enum):
+class IngestListJobType(Enum):
     LOCAL = 1
     REMOTE = 2
 
 
-class ILWrapper(AbstractIdentifier):
-    def __init__(self, cfg: ILWrapperConfig):
+class IngestListIdentifier(AbstractIdentifier):
+    def __init__(self, cfg: IngestListIdentifierConfig):
         self.__base_url = cfg.base_url
         self.__proxies = cfg.proxies
         self.__username = cfg.username
@@ -46,7 +46,7 @@ class ILWrapper(AbstractIdentifier):
             else:
                 raise Exception(f'{resp.status_code}: {resp.content}')
 
-    def __identify(self, file_path: str, job_type: ILWrapperJobtype = ILWrapperJobtype.LOCAL):
+    def __identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
         with RemoteSession(base_url=self.__base_url) as s:
 
             header = {
@@ -57,7 +57,7 @@ class ILWrapper(AbstractIdentifier):
 
             match job_type:
                 # Remote means we want to upload a file and identify it.
-                case ILWrapperJobtype.LOCAL:
+                case IngestListJobType.LOCAL:
                     with open(file_path, 'rb') as f:
                         data = f.read()
 
@@ -75,7 +75,7 @@ class ILWrapper(AbstractIdentifier):
                             self.__response = json.loads(resp.content)
                         else:
                             raise Exception(f'{resp.status_code}: {resp.content}')
-                case ILWrapperJobtype.REMOTE:
+                case IngestListJobType.REMOTE:
                     # local means we want to identify a file that is already on the server.
                     payload = {
                         'filename': file_path,
@@ -92,7 +92,7 @@ class ILWrapper(AbstractIdentifier):
                     else:
                         raise Exception(f'{resp.status_code}: {resp.content}')
 
-    def __validate(self, file_path: str, job_type: ILWrapperJobtype = ILWrapperJobtype.LOCAL):
+    def __validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
         with RemoteSession(base_url=self.__base_url) as s:
 
             header = {
@@ -103,7 +103,7 @@ class ILWrapper(AbstractIdentifier):
 
             match job_type:
                 # Remote means we want to upload a file and identify it.
-                case ILWrapperJobtype.LOCAL:
+                case IngestListJobType.LOCAL:
                     with open(file_path, 'rb') as f:
                         data = f.read()
 
@@ -121,7 +121,7 @@ class ILWrapper(AbstractIdentifier):
                             self.__response = json.loads(resp.content)
                         else:
                             raise Exception(f'{resp.status_code}: {resp.content}')
-                case ILWrapperJobtype.REMOTE:
+                case IngestListJobType.REMOTE:
                     # local means we want to identify a file that is already on the server.
                     payload = {
                         'filename': file_path,
@@ -138,7 +138,7 @@ class ILWrapper(AbstractIdentifier):
                     else:
                         raise Exception(f'{resp.status_code}: {resp.content}')
 
-    def identify(self, file_path: str, job_type: ILWrapperJobtype = ILWrapperJobtype.LOCAL):
+    def identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
 
         if self.__base_url and file_path:
             if self.token is None:
@@ -146,7 +146,7 @@ class ILWrapper(AbstractIdentifier):
 
             self.__identify(file_path, job_type)
 
-    def validate(self, file_path: str, job_type: ILWrapperJobtype = ILWrapperJobtype.LOCAL):
+    def validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
 
         if self.__base_url and file_path:
             if self.token is None:

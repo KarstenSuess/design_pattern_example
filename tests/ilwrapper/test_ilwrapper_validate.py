@@ -3,7 +3,7 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch, MagicMock
 
-from design_pattern.identify.ilwrapper.ilwrapper import ILWrapper
+from design_pattern.identify.ingestlist_identifier import IngestListIdentifier
 from design_pattern.identify.ilwrapper import ILWrapperConfig, ILWrapperJobtype
 
 
@@ -48,7 +48,7 @@ class TestILWrapperValidate(unittest.TestCase):
                 "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
                 side_effect=[session_login, session_create],
             ):
-                il = ILWrapper(cfg)  # consumes login session
+                il = IngestListIdentifier(cfg)  # consumes login session
                 il.validate("/path/to/file.pdf", ILWrapperJobtype.LOCAL)  # consumes create session
 
         self.assertEqual(getattr(il, "_ILWrapper__response"), payload)
@@ -67,7 +67,7 @@ class TestILWrapperValidate(unittest.TestCase):
                 "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
                 side_effect=[session_login, session_create],
             ):
-                il = ILWrapper(cfg)
+                il = IngestListIdentifier(cfg)
                 with self.assertRaises(Exception) as ctx:
                     il.validate("/path/to/file.pdf", ILWrapperJobtype.LOCAL)
 
@@ -88,7 +88,7 @@ class TestILWrapperValidate(unittest.TestCase):
             "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
             side_effect=[session_login, session_create],
         ):
-            il = ILWrapper(cfg)
+            il = IngestListIdentifier(cfg)
             il.validate("remote-file.pdf", ILWrapperJobtype.REMOTE)
 
         self.assertEqual(getattr(il, "_ILWrapper__response"), payload)
@@ -106,7 +106,7 @@ class TestILWrapperValidate(unittest.TestCase):
             "design_pattern.models.ilwrapper.ilwrapper.ILWrapperSession",
             side_effect=[session_login, session_create],
         ):
-            il = ILWrapper(cfg)
+            il = IngestListIdentifier(cfg)
             with self.assertRaises(Exception) as ctx:
                 il.validate("remote-file.pdf", ILWrapperJobtype.REMOTE)
 

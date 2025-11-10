@@ -1,18 +1,22 @@
 import os
 import unittest
 
-from design_pattern.identify import ILWrapperIdentifier
-from design_pattern.models.ilwrapper_data_model import ILWrapperFileIdentifyResponse
+from design_pattern.identify import IngestListIdentifier, IngestListIdentifierConfig
 from tests import TESTDATA_PATH
 
 
 class Test_ILWrapperIdentifier(unittest.TestCase):
     def test_upload_file(self):
-        test_file_path = os.path.join(TESTDATA_PATH, '25.KW_.-Speiseplan-Kantine-Golm.pdf')
+        test_file_path = os.path.join(TESTDATA_PATH, '06842ea9-032b-4c2d-b88b-23c848812260_Aussonderung.Bewertungsverzeichnis.0502.xlsx')
 
-        identifier: ILWrapperIdentifier = ILWrapperIdentifier(base_url="http://ilapiwrapper.apps.kubecluster.blha.mwfk.ad.lvnbb.de/")
-        res: ILWrapperFileIdentifyResponse = identifier.identify(test_file_path)
-        print(res.result)
+        config : IngestListIdentifierConfig =  IngestListIdentifierConfig (
+            base_url="http://blha-dimagapps-ilwrapper",
+            username="appuser",
+            password="",
+            proxies=None
+        )
+
+        identifier: IngestListIdentifier = IngestListIdentifier(config)
 
 
 if __name__ == '__main__':
