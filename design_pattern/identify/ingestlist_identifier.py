@@ -13,6 +13,7 @@ class IngestListIdentifierConfig:
     username: str | None = None
     password: str | None = None
 
+
 class IngestListJobType(Enum):
     LOCAL = 1
     REMOTE = 2
@@ -46,18 +47,17 @@ class IngestListIdentifier(AbstractIdentifier):
             else:
                 raise Exception(f'{resp.status_code}: {resp.content}')
 
+    def __header(self) -> dict[str, str]:
+        return {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + self.token,
+        }
+
     def __identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
         with RemoteSession(base_url=self.__base_url) as s:
-
             match job_type:
                 # Remote means we want to upload a file and identify it.
                 case IngestListJobType.LOCAL:
-
-                    header = {
-#                        'Content-Type': 'multipart/form-data',
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + self.token,
-                    }
 
                     with open(file_path, 'rb') as f:
                         data = f.read()
@@ -72,20 +72,15 @@ class IngestListIdentifier(AbstractIdentifier):
 
                         resp = s.post('/api/create',
                                       proxies=self.__proxies,
-                                      headers=header,
+                                      headers=self.__header(),
                                       files=files,
                                       data=payload)
 
-                        if resp.status_code >= 200 and resp.status_code < 400 and resp.content:
+                        if 200 <= resp.status_code < 400 and resp.content:
                             self.__response = json.loads(resp.content)
                         else:
                             raise Exception(f'{resp.status_code}: {resp.content}')
                 case IngestListJobType.REMOTE:
-
-                    header = {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + self.token,
-                    }
 
                     # local means we want to identify a file that is already on the server.
                     payload = {
@@ -95,40 +90,37 @@ class IngestListIdentifier(AbstractIdentifier):
 
                     resp = s.post('/api/create',
                                   proxies=self.__proxies,
-                                  headers=header,
+                                  headers=self.__header(),
                                   data=json.dumps(payload))
 
-                    if resp.status_code == 200 and resp.content:
+                    if 200 <= resp.status_code < 400 and resp.content:
                         self.__response = json.loads(resp.content)
                     else:
                         raise Exception(f'{resp.status_code}: {resp.content}')
 
     def __validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
         with RemoteSession(base_url=self.__base_url) as s:
-
-            header = {
-                'Content-Type': 'multipart/form-data',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + self.token,
-            }
-
             match job_type:
                 # Remote means we want to upload a file and identify it.
                 case IngestListJobType.LOCAL:
                     with open(file_path, 'rb') as f:
                         data = f.read()
 
+                        files = {
+                            'file': (file_path, data, "multipart/form-data")
+                        }
+
                         payload = {
-                            'file': (file_path, data, "multipart/form-data"),
                             'type': 'Validate'
                         }
 
                         resp = s.post('/api/create',
                                       proxies=self.__proxies,
-                                      headers=header,
-                                      files=payload)
+                                      headers=self.__header(),
+                                      files=files,
+                                      data=payload)
 
-                        if resp.status_code == 200 and resp.content:
+                        if 200 <= resp.status_code < 400 and resp.content:
                             self.__response = json.loads(resp.content)
                         else:
                             raise Exception(f'{resp.status_code}: {resp.content}')
@@ -141,15 +133,15 @@ class IngestListIdentifier(AbstractIdentifier):
 
                     resp = s.post('/api/create',
                                   proxies=self.__proxies,
-                                  headers=header,
+                                  headers=self.__header(),
                                   data=json.dumps(payload))
 
-                    if resp.status_code == 200 and resp.content:
+                    if 200 <= resp.status_code < 400 and resp.content:
                         self.__response = json.loads(resp.content)
                     else:
                         raise Exception(f'{resp.status_code}: {resp.content}')
 
-    def identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL)  -> dict[str]:
+    def identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> dict[str]:
 
         if self.__base_url and file_path:
             if self.token is None:
