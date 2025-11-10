@@ -13,7 +13,7 @@ class Test_ILWrapperIdentifier(unittest.TestCase):
         config: IngestListIdentifierConfig = IngestListIdentifierConfig(
             base_url="http://blha-dimagapps-ilwrapper",
             username="apiuser",
-            password="",
+            password="AUiS9Cne7YszGMB45cqa",
             proxies=None
         )
 

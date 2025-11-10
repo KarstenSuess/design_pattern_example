@@ -1,22 +1,9 @@
 import json
-from dataclasses import dataclass
-from enum import Enum
 
+from design_pattern.identify.ingestlist import IngestListIdentifierConfig, IngestListJobType
+from design_pattern.identify.ingestlist.models import IngestListResponse
 from design_pattern.models.abstract_identifier import AbstractIdentifier
 from design_pattern.utils import RemoteSession
-
-
-@dataclass
-class IngestListIdentifierConfig:
-    proxies: str | None = None
-    base_url: str | None = None
-    username: str | None = None
-    password: str | None = None
-
-
-class IngestListJobType(Enum):
-    LOCAL = 1
-    REMOTE = 2
 
 
 class IngestListIdentifier(AbstractIdentifier):
@@ -141,20 +128,22 @@ class IngestListIdentifier(AbstractIdentifier):
                     else:
                         raise Exception(f'{resp.status_code}: {resp.content}')
 
-    def identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> dict[str]:
+    def identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> IngestListResponse:
 
         if self.__base_url and file_path:
             if self.token is None:
                 self.__login()
 
             self.__identify(file_path, job_type)
-            return self.__response
+            return IngestListResponse.from_dict(self.__response)
+        return None
 
-    def validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> dict[str]:
+    def validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL) -> IngestListResponse:
 
         if self.__base_url and file_path:
             if self.token is None:
                 self.__login()
 
             self.__validate(file_path, job_type)
-            return self.__response
+            return IngestListResponse.from_dict(self.__response)
+        return None
