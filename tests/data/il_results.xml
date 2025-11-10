@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<identify worker="identify" version="7.2.0" start="2025-11-10T16:39:04.373373524Z">
+	<datei-liste>
+		<datei errors="0"
+		        filename="/data/c1da774a-f71d-482f-9cc1-df738714c699_C:/Users/Hufschlaeger2/Documents/git/blha-design_pattern_example/tests/data/06842ea9-032b-4c2d-b88b-23c848812260_Aussonderung.Bewertungsverzeichnis.0502.xlsx"
+		        status="finished">
+		   <stats status="finished">
+		      <md5>827f5554601bc4a8f5ce5f3c2b4205b7</md5>
+		      <filesize>26210</filesize>
+		      <filename>c1da774a-f71d-482f-9cc1-df738714c699_C:\Users\Hufschlaeger2\Documents\git\blha-design_pattern_example\tests\data\06842ea9-032b-4c2d-b88b-23c848812260_Aussonderung.Bewertungsverzeichnis.0502.xlsx</filename>
+		      <lastmod>1762792737672</lastmod>
+		      <created>1762792737669</created>
+		      <byte-count>
+		         <lf>150</lf>
+		         <cr>95</cr>
+		         <tab>93</tab>
+		         <csvSemicolonFirstLine>1</csvSemicolonFirstLine>
+		         <csvLF>76</csvLF>
+		         <semicolon>70</semicolon>
+		         <pipe>81</pipe>
+		         <comma>95</comma>
+		         <colon>84</colon>
+		         <minus>107</minus>
+		         <equal>98</equal>
+		         <singleQuote>77</singleQuote>
+		         <doubleQuote>88</doubleQuote>
+		         <null>2472</null>
+		         <blank>105</blank>
+		         <upperC_D>68</upperC_D>
+		         <upperC_O>81</upperC_O>
+		         <upperC_T>95</upperC_T>
+		         <lowerC_d>74</lowerC_d>
+		         <lowerC_o>109</lowerC_o>
+		         <lowerC_t>113</lowerC_t>
+		         <zeichenformat></zeichenformat>
+		      </byte-count>
+		   </stats>
+		   <file status="finished" version="5.46">
+		      <file-filename>c1da774a-f71d-482f-9cc1-df738714c699_C:\Users\Hufschlaeger2\Documents\git\blha-design_pattern_example\tests\data\06842ea9-032b-4c2d-b88b-23c848812260_Aussonderung.Bewertungsverzeichnis.0502.xlsx</file-filename>
+		      <file-version>5.46</file-version>
+		      <file-type>Microsoft Excel 2007+</file-type>
+		      <file-mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</file-mime-type>
+		      <file-mime-encoding>binary</file-mime-encoding>
+		   </file>
+		   <simplemagic status="finished" version="1.17">
+		      <simplemagic-filename>excel</simplemagic-filename>
+		      <simplemagic-mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</simplemagic-mime-type>
+		      <simplemagic-message>Microsoft Excel 2007+</simplemagic-message>
+		      <simplemagic-simplename>excel</simplemagic-simplename>
+		   </simplemagic>
+		   <droid container-sigversion="39"
+		           sigdate="2025-09-25T09:58:27"
+		           sigversion="121"
+		           status="finished"
+		           version="6.8.1">
+		      <droid-result>
+		         <droid-mimetype>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</droid-mimetype>
+		         <droid-typename>Microsoft Excel for Windows</droid-typename>
+		         <droid-puid>fmt/214</droid-puid>
+		         <droid-x-version>2007 onwards</droid-x-version>
+		         <droid-method>Container</droid-method>
+		      </droid-result>
+		   </droid>
+		   <jhove builddate="2025-02-06T09:16:33Z" status="finished">
+		      <jhove-format></jhove-format>
+		      <jhove-version></jhove-version>
+		      <jhove-wellformed>FALSE</jhove-wellformed>
+		      <jhove-valid>FALSE: Not valid second byte of UTF-8 encoding</jhove-valid>
+		      <jhove-mime></jhove-mime>
+		      <jhove-compression></jhove-compression>
+		      <jhove-audio-numchannels></jhove-audio-numchannels>
+		      <jhove-audio-codec></jhove-audio-codec>
+		      <jhove-audio-abspieldauer></jhove-audio-abspieldauer>
+		      <jhove-audio-abtastrate></jhove-audio-abtastrate>
+		      <jhove-audio-bittiefe></jhove-audio-bittiefe>
+		      <jhove-audio_name></jhove-audio_name>
+		      <jhove-audio_comment></jhove-audio_comment>
+		      <jhove-audio_creationdate></jhove-audio_creationdate>
+		      <jhove-image-length></jhove-image-length>
+		      <jhove-image-width></jhove-image-width>
+		      <jhove-color></jhove-color>
+		      <jhove-bitspersample></jhove-bitspersample>
+		      <jhove-pdf-profile></jhove-pdf-profile>
+		      <jhove-cnt-pages></jhove-cnt-pages>
+		      <jhove-cnt-images></jhove-cnt-images>
+		      <jhove-cnt-chars></jhove-cnt-chars>
+		      <jhove-line-endings></jhove-line-endings>
+		   </jhove>
+		   <tika status="finished" version="3.1.0">
+		      <tika-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</tika-type>
+		   </tika>
+		   <mediainfo status="finished" version="25.04">
+		      <Mediainfo-tool-version>25.04</Mediainfo-tool-version>
+		      <Audio-bit-depth></Audio-bit-depth>
+		      <Audio-bit-rate></Audio-bit-rate>
+		      <Audio-channels></Audio-channels>
+		      <Audio-duration></Audio-duration>
+		      <Audio-codec></Audio-codec>
+		      <Audio-sampling-rate></Audio-sampling-rate>
+		      <General-album></General-album>
+		      <General-performer></General-performer>
+		      <General-track-name></General-track-name>
+		      <General-duration></General-duration>
+		      <General-format>ZIP</General-format>
+		      <General-overall-bit-rate></General-overall-bit-rate>
+		      <Video-bit-rate></Video-bit-rate>
+		      <Video-color-space></Video-color-space>
+		      <Video-display-aspect-ratio></Video-display-aspect-ratio>
+		      <Video-duration></Video-duration>
+		      <Video-codec></Video-codec>
+		      <Video-frame-rate></Video-frame-rate>
+		      <Video-height></Video-height>
+		      <Video-width></Video-width>
+		   </mediainfo>
+		   <x-pictool-metaex status="finished" version="2.19.0">
+		      <extracted-tag>
+		         <name>Picture-File-Type-Detected-File-Type-Name</name>
+		         <value>ZIP</value>
+		      </extracted-tag>
+		      <extracted-tag>
+		         <name>Picture-File-Type-Detected-File-Type-Long-Name</name>
+		         <value>ZIP Archive</value>
+		      </extracted-tag>
+		      <extracted-tag>
+		         <name>Picture-File-Type-Detected-MIME-Type</name>
+		         <value>application/zip</value>
+		      </extracted-tag>
+		      <extracted-tag>
+		         <name>Picture-File-Type-Expected-File-Name-Extension</name>
+		         <value>.zip</value>
+		      </extracted-tag>
+		      <extracted-tag>
+		         <name>Picture-File-File-Name</name>
+		         <value>c1da774a-f71d-482f-9cc1-df738714c699_C:\Users\Hufschlaeger2\Documents\git\blha-design_pattern_example\tests\data\06842ea9-032b-4c2d-b88b-23c848812260_Aussonderung.Bewertungsverzeichnis.0502.xlsx</value>
+		      </extracted-tag>
+		      <extracted-tag>
+		         <name>Picture-File-File-Size</name>
+		         <value>26210 bytes</value>
+		      </extracted-tag>
+		      <extracted-tag>
+		         <name>Picture-File-File-Modified-Date</name>
+		         <value>Mon Nov 10 17:38:57 +01:00 2025</value>
+		      </extracted-tag>
+		   </x-pictool-metaex>
+		   <libDimagIdentify>
+		      <guessed-mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</guessed-mime-type>
+		      <guessed-puid>fmt/214</guessed-puid>
+		      <guessed-title>Microsoft Excel for Windows</guessed-title>
+		   </libDimagIdentify>
+		</datei>
+	</datei-liste>
+</identify>
