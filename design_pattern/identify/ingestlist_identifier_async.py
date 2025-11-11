@@ -1,6 +1,6 @@
 import asyncio
 
-from design_pattern.identify import IngestListTaskState
+from design_pattern.identify.ingestlist.models import IngestListTaskState
 from design_pattern.identify.ingestlist import IngestListIdentifierConfig, IngestListJobType
 from design_pattern.identify.ingestlist.models import IngestListTaskResponse
 from design_pattern.models.abstract_identifier import AbstractIdentifier
@@ -31,7 +31,7 @@ class IngestListIdentifierAsync(AbstractIdentifier):
     return self
 
   async def __login(self):
-    async with RemoteSessionAsync(base_url=self.__base_url) as s:
+    async with RemoteSessionAsync(base_url=self.__base_url, proxies=self.__proxies) as s:
       payload = {
         'email': self.__username,
         'password': self.__password
@@ -43,7 +43,6 @@ class IngestListIdentifierAsync(AbstractIdentifier):
 
       resp = await s.post(
         "/api/login",
-        proxies=self.__proxies,
         headers=header,
         json=payload
       )
@@ -60,7 +59,7 @@ class IngestListIdentifierAsync(AbstractIdentifier):
     }
 
   async def __identify(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
-    async with RemoteSessionAsync(base_url=self.__base_url) as s:
+    async with RemoteSessionAsync(base_url=self.__base_url, proxies=self.__proxies) as s:
       match job_type:
         case IngestListJobType.LOCAL:
           with open(file_path, 'rb') as f:
@@ -95,7 +94,6 @@ class IngestListIdentifierAsync(AbstractIdentifier):
 
           resp = await s.post(
             '/api/create',
-            proxies=self.__proxies,
             headers=self.__header(),
             json=payload
           )
@@ -106,7 +104,7 @@ class IngestListIdentifierAsync(AbstractIdentifier):
             raise Exception(f'{resp.status_code}: {resp.content}')
 
   async def __validate(self, file_path: str, job_type: IngestListJobType = IngestListJobType.LOCAL):
-    async with RemoteSessionAsync(base_url=self.__base_url) as s:
+    async with RemoteSessionAsync(base_url=self.__base_url, proxies=self.__proxies) as s:
       match job_type:
         case IngestListJobType.LOCAL:
           with open(file_path, 'rb') as f:
@@ -122,7 +120,6 @@ class IngestListIdentifierAsync(AbstractIdentifier):
 
             resp = await s.post(
               '/api/create',
-              proxies=self.__proxies,
               headers=self.__header(),
               files=files,
               data=payload
@@ -152,10 +149,9 @@ class IngestListIdentifierAsync(AbstractIdentifier):
             raise Exception(f'{resp.status_code}: {resp.content}')
 
   async def __check_task_status(self, job_id: str):
-    async with RemoteSessionAsync(base_url=self.__base_url) as s:
+    async with RemoteSessionAsync(base_url=self.__base_url, proxies=self.__proxies) as s:
       resp = await s.get(
         f'api/job/{job_id}',
-        proxies=self.__proxies,
         headers=self.__header()
       )
 
